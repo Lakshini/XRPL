@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "xrpl": "^2.1.1"
+  },
+  "name": "xrpl",
+  "version": "1.0.0",
+  "main": "xrpl.js",
+  
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
