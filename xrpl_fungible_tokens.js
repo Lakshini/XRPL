@@ -23,6 +23,16 @@ async function main() {
              xrpl.AccountSetTfFlags.tfRequireDestTag)
   }
 
+  const cst_prepared = await client.autofill(cold_settings_tx)
+  const cst_signed = cold_wallet.sign(cst_prepared)
+  console.log("Sending cold address AccountSet transaction...")
+  const cst_result = await client.submitAndWait(cst_signed.tx_blob)
+  if (cst_result.result.meta.TransactionResult == "tesSUCCESS") {
+    console.log(`Transaction succeeded: https://testnet.xrpl.org/transactions/${cst_signed.hash}`)
+  } else {
+    throw `Error sending transaction: ${cst_result}`
+  }
+
   // Configure hot address settings --------------------------------------------
 
   const hot_settings_tx = {
@@ -69,7 +79,7 @@ async function main() {
    }
  
    // Send token ----------------------------------------------------------------
-  const issue_quantity = "3840"
+  const issue_quantity = "3000"
   const send_token_tx = {
     "TransactionType": "Payment",
     "Account": cold_wallet.address,
